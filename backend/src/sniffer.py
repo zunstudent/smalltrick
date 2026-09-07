@@ -9,8 +9,8 @@ import requests
 from datetime import datetime
 
 # 🔥 KONFIGURASI SUPABASE (GANTI DENGAN MILIKMU!)
-SUPABASE_URL = "https://YOUR_PROJECT.supabase.co"
-SUPABASE_ANON_KEY = "YOUR_PUBLISHABLE_KEY"
+SUPABASE_URL = "https://fjjdbvyqqpshaxgqavnx.supabase.co"
+SUPABASE_ANON_KEY = "sb_publishable_FGhSQDZF4jZGniE1F3RPrA_3i57aI4p"
 
 def process_packet(packet):
     """Proses paket DNS dan kirim ke Supabase"""

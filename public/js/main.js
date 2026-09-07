@@ -1,8 +1,8 @@
 // ============================================================
 // 🔥 SMALLTRICK — Konfigurasi
 // ============================================================
-const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_PUBLISHABLE_KEY';
+const SUPABASE_URL = 'https://fjjdbvyqqpshaxgqavnx.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_FGhSQDZF4jZGniE1F3RPrA_3i57aI4p';
 
 // ============================================================
 // MATRIX BACKGROUND (Canvas)
