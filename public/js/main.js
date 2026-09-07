@@ -126,26 +126,27 @@ async function getBatteryInfo() {
         return { level: '[ ERROR ]', charging: '[ ERROR ]' };
     }
 }
-
 async function getIPAndLocation() {
     try {
-        const resIP = await fetch('https://api.ipify.org?format=json');
-        const dataIP = await resIP.json();
-        const ip = dataIP.ip;
-        const resLoc = await fetch(`https://ipapi.co/${ip}/json/`);
-        const dataLoc = await resLoc.json();
-        let location = '[ UNKNOWN ]';
-        if (dataLoc.city && dataLoc.country_name) {
-            location = `${dataLoc.city}, ${dataLoc.country_name}`;
-        } else if (dataLoc.country_name) {
-            location = dataLoc.country_name;
+        // Panggil API ipwho.is untuk mendapatkan IP dan lokasi
+        const response = await fetch('https://ipwho.is/');
+        const data = await response.json();
+
+        // Cek apakah request berhasil
+        if (data.success) {
+            return {
+                ip: data.ip,
+                location: `${data.city}, ${data.region}, ${data.country}` // Contoh: "Jakarta, Jakarta, Indonesia"
+            };
+        } else {
+            console.warn('ipwho.is gagal:', data.message);
+            return { ip: 'Tidak terdeteksi', location: 'Tidak diketahui' };
         }
-        return { ip, location };
-    } catch (e) {
-        return { ip: '[ UNKNOWN ]', location: '[ UNKNOWN ]' };
+    } catch (error) {
+        console.error('Error mengambil IP/Lokasi:', error);
+        return { ip: 'Tidak terdeteksi', location: 'Tidak diketahui' };
     }
 }
-
 // ============================================================
 // 4. KUMPULKAN & KIRIM (DENGAN LOGGING DETAIL)
 // ============================================================
