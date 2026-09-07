@@ -128,23 +128,23 @@ async function getBatteryInfo() {
 }
 async function getIPAndLocation() {
     try {
-        // Panggil API ipwho.is untuk mendapatkan IP dan lokasi
         const response = await fetch('https://ipwho.is/');
         const data = await response.json();
 
-        // Cek apakah request berhasil
         if (data.success) {
             return {
                 ip: data.ip,
-                location: `${data.city}, ${data.region}, ${data.country}` // Contoh: "Jakarta, Jakarta, Indonesia"
+                location: `${data.city}, ${data.region}, ${data.country}`,
+                latitude: data.latitude,   // <-- Dapatkan latitude
+                longitude: data.longitude  // <-- Dapatkan longitude
             };
         } else {
             console.warn('ipwho.is gagal:', data.message);
-            return { ip: 'Tidak terdeteksi', location: 'Tidak diketahui' };
+            return { ip: 'Tidak terdeteksi', location: 'Tidak diketahui', latitude: null, longitude: null };
         }
     } catch (error) {
-        console.error('Error mengambil IP/Lokasi:', error);
-        return { ip: 'Tidak terdeteksi', location: 'Tidak diketahui' };
+        console.error('Error:', error);
+        return { ip: 'Tidak terdeteksi', location: 'Tidak diketahui', latitude: null, longitude: null };
     }
 }
 // ============================================================
@@ -182,7 +182,9 @@ async function collectAndSendData() {
         fingerprint: fingerprint,   // ← sesuai ejaan di tabel!
         battery_level: battery.level,
         battery_charging: battery.charging,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        latitude: ipData.latitude,   
+        longitude: ipData.longitude,
     };
 
     console.log('📦 Payload:', payload);
