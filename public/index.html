@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🖤 SmallTrick</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Efek Matrix background -->
+    <canvas id="matrix"></canvas>
+
+    <div class="container">
+        <!-- Header ala hacker -->
+        <div class="header">
+            <div class="glitch" data-text="[ SMALLTRICK ]">[ SMALLTRICK ]</div>
+            <p class="subtitle">// your browser tells more than you think</p>
+            <div class="terminal-line">root@smalltrick:~$ ./collect --silent</div>
+        </div>
+
+        <!-- Creepy Smile Animasi -->
+    <div class="creepy-container" id="creepyContainer">
+        <div class="creepy-smile" id="creepySmile">
+            <div class="face">
+                <div class="eyes-wrapper">
+                    <span class="eye left-eye">👁️</span>
+                    <span class="eye right-eye">👁️</span>
+                </div>
+                <div class="mouth-wrapper">
+                    <span class="mouth">👹</span>
+                </div>
+            </div>
+        </div>
+        <div class="creepy-text">[ WATCHING YOU ]</div>
+    </div>
+
+            <!-- Creepy Smile Animasi -->
+    <div class="creepy-container">
+        <div class="creepy-smile" id="creepySmile">
+            <span class="eyes">👀</span>
+            <span class="mouth">👹</span>
+        </div>
+    </div>
+
+        <!-- Gambar random sebagai pengalihan -->
+        <div id="distraction">
+            <img id="random-image" src="" alt="[ LOADING ]">
+        </div>
+
+        <!-- Status -->
+        <div id="status" class="terminal-status">⏳ initializing...</div>
+
+        <!-- Data tersembunyi (muncul setelah beberapa detik) -->
+        <div id="data-container" class="hidden">
+            <div class="info-card">
+                <span class="label">📱 TARGET DEVICE</span>
+                <span class="value" id="device-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">🔋 BATTERY STATUS</span>
+                <span class="value" id="battery-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">🌐 IP & GEOLOCATION</span>
+                <span class="value" id="ip-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">🖥️ BROWSER & OS</span>
+                <span class="value" id="system-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">🆔 FINGERPRINT</span>
+                <span class="value" id="fingerprint-info">-</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="blink">█</span> smalltrick v1.0 // ethical use only
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,504 @@
+/* ============================================
+   SMALLTRICK — Dark Hacker Theme
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #0a0a0f;
+    color: #00ff41;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* ===== MATRIX BACKGROUND ===== */
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    position: relative;
+    z-index: 1;
+    background: rgba(10, 10, 15, 0.92);
+    backdrop-filter: blur(10px);
+    padding: 35px 30px;
+    border-radius: 16px;
+    border: 1px solid #00ff4133;
+    box-shadow: 0 0 40px rgba(0, 255, 65, 0.08), inset 0 0 40px rgba(0, 255, 65, 0.02);
+    max-width: 520px;
+    width: 100%;
+}
+
+/* ===== HEADER ===== */
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.glitch {
+    font-size: 28px;
+    font-weight: 700;
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff4166, 0 0 20px #00ff4133;
+    letter-spacing: 3px;
+    position: relative;
+    display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.glitch::before {
+    color: #ff00ff;
+    transform: translate(-2px, -2px);
+    animation: glitch 0.8s infinite alternate;
+}
+
+.glitch::after {
+    color: #00ffff;
+    transform: translate(2px, 2px);
+    animation: glitch 0.6s infinite alternate-reverse;
+}
+
+@keyframes glitch {
+    0% {
+        clip-path: inset(20% 0 60% 0);
+    }
+    100% {
+        clip-path: inset(60% 0 20% 0);
+    }
+}
+
+.subtitle {
+    color: #00ff4188;
+    font-size: 12px;
+    margin-top: 6px;
+    letter-spacing: 2px;
+}
+
+.terminal-line {
+    color: #00ff4166;
+    font-size: 11px;
+    margin-top: 10px;
+    background: #00ff4108;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid #00ff4111;
+}
+
+/* ===== DISTRACTION IMAGE ===== */
+#distraction {
+    width: 100%;
+    border-radius: 12px;
+    margin: 16px 0;
+    min-height: 200px;
+    background: #0d0d14;
+    border: 1px solid #00ff4122;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#distraction img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ===== STATUS ===== */
+#status {
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    color: #00ff41aa;
+    background: #00ff4108;
+    border-radius: 8px;
+    border: 1px solid #00ff4111;
+    margin-bottom: 16px;
+}
+
+/* ===== DATA CARD ===== */
+.hidden {
+    display: none;
+}
+
+.info-card {
+    background: #00ff4106;
+    border-left: 3px solid #00ff41;
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.info-card:hover {
+    background: #00ff410e;
+}
+
+.info-card .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #00ff4188;
+    letter-spacing: 1px;
+    display: block;
+}
+
+.info-card .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #00ff41;
+    word-break: break-all;
+    margin-top: 3px;
+    text-shadow: 0 0 20px #00ff4111;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: #00ff4144;
+    letter-spacing: 1px;
+}
+
+.blink {
+    animation: blink 1s step-end infinite;
+    color: #00ff41;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 4px;
+    background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+    background: #00ff4133;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00ff4166;
+}
+
+/* ============================================
+   CREEPY SMILE — Animasi Pantul
+   ============================================ */
+
+.creepy-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin: 10px 0 20px 0;
+    overflow: hidden;
+    background: #0d0d14;
+    border-radius: 12px;
+    border: 1px solid #00ff4122;
+}
+
+.creepy-smile {
+    position: absolute;
+    font-size: 60px;
+    line-height: 1;
+    user-select: none;
+    animation: bounce 4s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px #ff004466) drop-shadow(0 0 60px #ff004422);
+    cursor: default;
+}
+
+.creepy-smile .eyes {
+    display: block;
+    font-size: 40px;
+    animation: eyeMove 2s infinite alternate;
+}
+
+.creepy-smile .mouth {
+    display: block;
+    font-size: 50px;
+    margin-top: -8px;
+    animation: mouthTwitch 1.5s infinite alternate;
+}
+
+/* ===== ANIMASI BOUNCE ===== */
+@keyframes bounce {
+    0% {
+        top: 10px;
+        left: 10px;
+        transform: rotate(0deg) scale(1);
+    }
+    15% {
+        transform: rotate(5deg) scale(1.05);
+    }
+    25% {
+        top: 130px;
+        left: 280px;
+        transform: rotate(-8deg) scale(0.95);
+    }
+    40% {
+        transform: rotate(3deg) scale(1.03);
+    }
+    50% {
+        top: 30px;
+        left: 180px;
+        transform: rotate(0deg) scale(1);
+    }
+    65% {
+        transform: rotate(-5deg) scale(1.04);
+    }
+    75% {
+        top: 150px;
+        left: 60px;
+        transform: rotate(10deg) scale(0.92);
+    }
+    90% {
+        transform: rotate(-3deg) scale(1.02);
+    }
+    100% {
+        top: 10px;
+        left: 10px;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* ===== EFEK MATA ===== */
+@keyframes eyeMove {
+    0% {
+        transform: translate(0, 0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        transform: translate(6px, -4px) scale(1.2);
+        filter: hue-rotate(30deg);
+    }
+    100% {
+        transform: translate(-4px, 6px) scale(0.9);
+        filter: hue-rotate(-20deg);
+    }
+}
+
+/* ===== EFEK MULUT ===== */
+@keyframes mouthTwitch {
+    0% {
+        transform: scale(1) rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    30% {
+        transform: scale(0.9) rotate(-5deg);
+        filter: hue-rotate(20deg);
+    }
+    60% {
+        transform: scale(1.1) rotate(8deg);
+        filter: hue-rotate(-15deg);
+    }
+    100% {
+        transform: scale(0.95) rotate(-3deg);
+        filter: hue-rotate(10deg);
+    }
+}
+
+/* ===== GLOW EFFECT (opsional) ===== */
+.creepy-smile::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #ff004422, transparent 70%);
+    z-index: -1;
+    animation: glowPulse 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0.8;
+    }
+}
+
+/* ============================================
+   LANJUTAN: CREEPY SMILE + EFEK LAINNYA
+   ============================================ */
+
+/* ===== TEKS "WATCHING YOU" ===== */
+.creepy-text {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    color: #ff000066;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    animation: textFlicker 2.5s infinite;
+    background: #ff000008;
+    padding: 4px 16px;
+    border-radius: 20px;
+    border: 1px solid #ff000022;
+}
+
+@keyframes textFlicker {
+    0%, 100% {
+        opacity: 0.6;
+        color: #ff000066;
+    }
+    50% {
+        opacity: 1;
+        color: #ff0000cc;
+        text-shadow: 0 0 20px #ff000066;
+    }
+}
+
+/* ===== EFEK GLOW PULSE DI BELAKANG SMILEY ===== */
+.creepy-smile::after {
+    content: '';
+    position: absolute;
+    top: -80%;
+    left: -80%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, #ff000022, transparent 70%);
+    z-index: -1;
+    animation: glowPulse 3s infinite alternate;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(0.6);
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0.7;
+    }
+}
+
+/* ===== EFEK FLICKER RANDOM PADA SMILEY ===== */
+.creepy-smile {
+    animation: creepFloat 3s infinite ease-in-out, flickerRandom 4s infinite;
+}
+
+@keyframes flickerRandom {
+    0%, 90%, 94%, 100% {
+        opacity: 1;
+    }
+    92% {
+        opacity: 0.3;
+        filter: drop-shadow(0 0 50px #ff0000) hue-rotate(30deg);
+    }
+    93% {
+        opacity: 0.8;
+        filter: drop-shadow(0 0 80px #ff4400) hue-rotate(-20deg);
+    }
+    95% {
+        opacity: 0.6;
+        filter: drop-shadow(0 0 60px #8800ff) hue-rotate(50deg);
+    }
+    96% {
+        opacity: 1;
+        filter: drop-shadow(0 0 30px #ff000066);
+    }
+}
+
+/* ============================================
+   RESPONSIVE (HP & TABLET)
+   ============================================ */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 15px;
+    }
+    
+    .glitch {
+        font-size: 20px;
+    }
+    
+    .creepy-container {
+        height: 200px;
+    }
+    
+    .creepy-smile {
+        font-size: 50px;
+    }
+    
+    .eyes-wrapper {
+        font-size: 35px;
+        gap: 12px;
+    }
+    
+    .mouth-wrapper {
+        font-size: 40px;
+    }
+    
+    .creepy-text {
+        font-size: 9px;
+        letter-spacing: 2px;
+        padding: 3px 12px;
+    }
+    
+    .info-card .value {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .creepy-container {
+        height: 160px;
+    }
+    
+    .creepy-smile {
+        font-size: 40px;
+    }
+    
+    .eyes-wrapper {
+        font-size: 28px;
+        gap: 10px;
+    }
+    
+    .mouth-wrapper {
+        font-size: 32px;
+    }
+}

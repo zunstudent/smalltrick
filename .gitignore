@@ -1,0 +1,22 @@
+# Node
+node_modules/
+.env
+dist/
+
+# Python
+__pycache__/
+*.pyc
+*.log
+*.pcap
+
+# System
+.DS_Store
+Thumbs.db
+*.swp
+
+# Vercel
+.vercel/
+
+# IDE
+.vscode/
+.idea/
