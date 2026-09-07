@@ -1,12 +1,9 @@
-// ============================================================
-// 🔥 SMALLTRICK — Konfigurasi
-// ============================================================
-const SUPABASE_URL = 'https://fjjdbvyqqpshaxgqavnx.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_FGhSQDZF4jZGniE1F3RPrA_3i57aI4p';
 
-// ============================================================
+    const SUPABASE_URL = 'https://fjjdbvyqqpshaxgqavnx.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_FGhSQDZF4jZGniE1F3RPrA_3i57aI4p';       
+
 // MATRIX BACKGROUND (Canvas)
-// ============================================================
+
 (function matrixEffect() {
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
@@ -170,17 +167,27 @@ async function collectAndSendData() {
         document.getElementById('data-container').classList.remove('hidden');
     }, 2500);
 
+    // ============================================================
+    // 🔥 PAYLOAD SESUAI STRUKTUR TABEL
+    // ============================================================
     const payload = {
+        // Kolom lama
+        level: parseFloat(battery.level) / 100,      // angka (float8)
+        charging: battery.charging === '⚡ CHARGING', // boolean
+
+        // Kolom baru — PERHATIKAN NAMA KOLOM 'fingerptint' (tanpa 'r') sesuai tabel
         device_type: device.device,
         os_name: device.os,
         browser_name: device.browser,
-        battery_level: battery.level,
-        battery_charging: battery.charging,
         ip_address: ipData.ip,
         location: ipData.location,
-        fingerprint: fingerprint,
+        fingerptint: fingerprint,   // ← sesuai ejaan di tabel kamu!
+        battery_level: battery.level,
+        battery_charging: battery.charging,
         timestamp: new Date().toISOString()
     };
+
+    console.log('📦 Payload:', payload);
 
     try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/battery_data`, {
@@ -193,16 +200,22 @@ async function collectAndSendData() {
             body: JSON.stringify(payload)
         });
 
+        const responseText = await res.text();
+        console.log('📡 Status:', res.status);
+        console.log('📡 Response:', responseText);
+
         if (res.ok) {
             statusEl.textContent = '✅ data transmitted successfully';
             statusEl.style.color = '#00ff41';
         } else {
             statusEl.textContent = '⚠️ transmission failed (status: ' + res.status + ')';
             statusEl.style.color = '#ff4444';
+            console.error('❌ Error detail:', responseText);
         }
     } catch (e) {
         statusEl.textContent = '❌ error: ' + e.message;
         statusEl.style.color = '#ff4444';
+        console.error('❌ Fetch error:', e);
     }
 }
 
