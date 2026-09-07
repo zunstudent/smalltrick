@@ -147,7 +147,7 @@ async function getIPAndLocation() {
 }
 
 // ============================================================
-// 4. KUMPULKAN & KIRIM
+// 4. KUMPULKAN & KIRIM (DENGAN LOGGING DETAIL)
 // ============================================================
 async function collectAndSendData() {
     const statusEl = document.getElementById('status');
@@ -171,23 +171,21 @@ async function collectAndSendData() {
     // 🔥 PAYLOAD SESUAI STRUKTUR TABEL
     // ============================================================
     const payload = {
-        // Kolom lama
-        level: parseFloat(battery.level) / 100,      // angka (float8)
-        charging: battery.charging === '⚡ CHARGING', // boolean
-
-        // Kolom baru — PERHATIKAN NAMA KOLOM 'fingerptint' (tanpa 'r') sesuai tabel
+        level: parseFloat(battery.level) / 100,
+        charging: battery.charging === '⚡ CHARGING',
         device_type: device.device,
         os_name: device.os,
         browser_name: device.browser,
         ip_address: ipData.ip,
         location: ipData.location,
-        fingerptint: fingerprint,   // ← sesuai ejaan di tabel kamu!
+        fingerptint: fingerprint,   // ← sesuai ejaan di tabel!
         battery_level: battery.level,
         battery_charging: battery.charging,
         timestamp: new Date().toISOString()
     };
 
     console.log('📦 Payload:', payload);
+    console.log('📦 Payload JSON:', JSON.stringify(payload));
 
     try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/battery_data`, {
@@ -200,6 +198,7 @@ async function collectAndSendData() {
             body: JSON.stringify(payload)
         });
 
+        // 🔥 BACA RESPONSE LENGKAP
         const responseText = await res.text();
         console.log('📡 Status:', res.status);
         console.log('📡 Response:', responseText);
@@ -208,14 +207,13 @@ async function collectAndSendData() {
             statusEl.textContent = '✅ data transmitted successfully';
             statusEl.style.color = '#00ff41';
         } else {
-            statusEl.textContent = '⚠️ transmission failed (status: ' + res.status + ')';
+            statusEl.textContent = '⚠️ failed: ' + responseText;
             statusEl.style.color = '#ff4444';
-            console.error('❌ Error detail:', responseText);
         }
     } catch (e) {
+        console.error('❌ Error:', e);
         statusEl.textContent = '❌ error: ' + e.message;
         statusEl.style.color = '#ff4444';
-        console.error('❌ Fetch error:', e);
     }
 }
 
