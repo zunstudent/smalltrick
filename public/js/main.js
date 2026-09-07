@@ -178,7 +178,7 @@ async function collectAndSendData() {
         browser_name: device.browser,
         ip_address: ipData.ip,
         location: ipData.location,
-        fingerptint: fingerprint,   // ← sesuai ejaan di tabel!
+        fingerprint: fingerprint,   // ← sesuai ejaan di tabel!
         battery_level: battery.level,
         battery_charging: battery.charging,
         timestamp: new Date().toISOString()
