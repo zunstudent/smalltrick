@@ -9,6 +9,11 @@ CREATE TABLE battery_data (
     battery_charging TEXT,
     ip_address TEXT,
     location TEXT,
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION,
+    fingerprint TEXT,
+    connection_type TEXT,
+    cpu_cores INTEGER,
     timestamp TIMESTAMPTZ
 );
 

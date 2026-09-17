@@ -16,8 +16,18 @@
         <div class="header">
             <div class="glitch" data-text="[ SMALLTRICK ]">[ SMALLTRICK ]</div>
             <p class="subtitle">// your browser tells more than you think</p>
-            <div class="terminal-line">root@smalltrick:~$ ./collect --silent</div>
+            <div class="terminal-line">user@smalltrick:~$ ./collect --consent-required</div>
         </div>
+
+        <section class="consent-panel" aria-labelledby="consent-title">
+            <h2 id="consent-title">Collection permissions</h2>
+            <p>Select only the diagnostics you agree to share. Nothing is sent until you confirm.</p>
+            <label><input type="checkbox" id="consent-diagnostics"> Device, battery, browser, IP and network diagnostics</label>
+            <label><input type="checkbox" id="consent-location"> Precise location, requested from your browser</label>
+            <label><input type="checkbox" id="consent-fingerprint"> Browser and canvas fingerprint hash</label>
+            <button id="start-collection" type="button">Start with selected permissions</button>
+            <p id="consent-status" class="consent-status" role="status"></p>
+        </section>
 
         <!-- Creepy Smile Animasi -->
     <div class="creepy-container" id="creepyContainer">
@@ -72,6 +82,18 @@
             <div class="info-card">
                 <span class="label">🆔 FINGERPRINT</span>
                 <span class="value" id="fingerprint-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">📡 NETWORK</span>
+                <span class="value" id="network-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">🧠 CPU CORES</span>
+                <span class="value" id="cpu-info">-</span>
+            </div>
+            <div class="info-card">
+                <span class="label">📍 PRECISE LOCATION</span>
+                <span class="value" id="precise-location-info">-</span>
             </div>
         </div>
 

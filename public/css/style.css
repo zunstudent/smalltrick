@@ -112,6 +112,58 @@ body {
     border: 1px solid #00ff4111;
 }
 
+.consent-panel {
+    border: 1px solid #00ff4133;
+    background: #00ff4108;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+}
+
+.consent-panel h2 {
+    color: #00ff41;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.consent-panel p,
+.consent-panel label {
+    color: #b6c9b9;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.consent-panel label {
+    display: block;
+    margin: 9px 0;
+}
+
+.consent-panel input {
+    accent-color: #00ff41;
+    margin-right: 8px;
+}
+
+.consent-panel button {
+    border: 1px solid #00ff41;
+    background: #00ff4118;
+    color: #00ff41;
+    padding: 9px 12px;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.consent-panel button:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+.consent-status {
+    min-height: 16px;
+    margin-top: 10px;
+    color: #ffcc66 !important;
+}
+
 /* ===== DISTRACTION IMAGE ===== */
 #distraction {
     width: 100%;
